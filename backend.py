@@ -2,10 +2,11 @@ from langgraph.graph import StateGraph, END , START
 from typing import TypedDict , Optional, Union, List
 import google.generativeai as genai
 from dotenv import load_dotenv
+import streamlit as st
 import os
 
 load_dotenv()
-genai.configure(api_key=os.getenv("API_KEY"))   
+genai.configure(api_key=st.secrets("API_KEY"))   
 
 class practical_details(TypedDict):
     grade: str
@@ -141,3 +142,4 @@ for node in ["apparatus", "theory", "procedure", "observations", "conclusion", "
 graph.add_edge("combine_file", END)
 
 workflow = graph.compile()
+
