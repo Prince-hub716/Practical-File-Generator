@@ -6,7 +6,7 @@ import streamlit as st
 import os
 
 load_dotenv()
-genai.configure(api_key=st.secrets("API_KEY"))   
+genai.configure(api_key=st.secrets["API_KEY"])   
 
 class practical_details(TypedDict):
     grade: str
