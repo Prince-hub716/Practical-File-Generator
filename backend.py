@@ -39,14 +39,14 @@ def apparatus(state: practical_details):
 def theory(state: practical_details):
     if "Theory" not in state["selected_sections"]:
         return {"theory": ""}
-    prompt = f"Provide a 120-word theory for a {state['aim']} practical in {state['subject']} for {state['grade']}."
+    prompt = f"Provide a general 120-word theory for a {state['aim']} practical in {state['subject']} ."
     model = genai.GenerativeModel("gemini-2.5-flash")
     return {"theory": model.generate_content(prompt).text.strip()}
 
 def procedure(state: practical_details):
     if "Procedure" not in state["selected_sections"]:
         return {"procedure": ""}
-    prompt = f"List a clear step-by-step procedure for {state['aim']} in {state['subject']} ({state['grade']}). Use numbered steps(~150 words)."
+    prompt = f"List a clear step-by-step procedure for {state['aim']} in {state['subject']} ({state['grade']}). Use numbered steps(~ maximum 150 words total).Write in the next line after completion of each point"
     model = genai.GenerativeModel("gemini-2.5-flash")
     return {"procedure": model.generate_content(prompt).text.strip()}
 
@@ -55,7 +55,7 @@ def observations(state: practical_details):
         return {"observations": ""}
     if state.get("observations"):
         return {"observations": state["observations"]}
-    prompt = f"Provide observations in a table format for {state['aim']} in {state['subject']} ({state['grade']})."
+    prompt = f"Provide observations in a table format for {state['aim']} in {state['subject']}."
     model = genai.GenerativeModel("gemini-2.5-flash")
     return {"observations": model.generate_content(prompt).text.strip()}
 
@@ -142,4 +142,5 @@ for node in ["apparatus", "theory", "procedure", "observations", "conclusion", "
 graph.add_edge("combine_file", END)
 
 workflow = graph.compile()
+
 
